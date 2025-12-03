@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bruno Frigo — Perfil</title>
+  <meta name="description" content="Perfil pessoal de Bruno Frigo — desenvolvedor, criativo e apaixonado por tecnologia." />
+
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --muted:#9aa6b2;
+      --accent:#7dd3fc;
+      --glass: rgba(255,255,255,0.04);
+      --radius:16px;
+      --maxw:1100px;
+      --ff:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Arial;
+    }
+    body{font-family:var(--ff);background:linear-gradient(180deg,var(--bg),#071027);color:#e6eef6;line-height:1.45;padding:30px}
+    .container{max-width:var(--maxw);margin:0 auto}
+
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .brand{display:flex;gap:14px;align-items:center}
+    .avatar{width:64px;height:64px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#60a5fa);display:flex;align-items:center;justify-content:center;font-weight:700;color:#04263a}
+    h1{font-size:20px}
+
+    .top-actions{display:flex;gap:10px}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;color:var(--accent);cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;color:var(--muted)}
+
+    main{display:grid;grid-template-columns:1fr 360px;gap:24px}
+    .card{background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));padding:20px;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.02)}
+
+    .portrait{width:120px;height:120px;border-radius:14px;background:#152a3a;display:flex;align-items:center;justify-content:center;color:var(--muted)}
+    .meta{display:flex;gap:12px;margin-top:12px}
+    .pill{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:999px;font-size:13px;color:var(--muted)}
+
+    .skills,.projects{display:flex;flex-wrap:wrap;gap:10px}
+    .skill{background:rgba(255,255,255,0.02);padding:8px 10px;border-radius:10px;font-size:13px;color:var(--muted)}
+
+    .project{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      background:rgba(255,255,255,0.02);
+      transition:0.25s;
+    }
+    .project:hover{
+      background:rgba(255,255,255,0.05);
+      transform:translateY(-2px);
+    }
+
+    .project a{
+      font-size:13px;
+      color:var(--accent);
+      word-break:break-all;
+      display:block;
+      margin-top:6px;
+    }
+
+    .card-aside{position:sticky;top:20px}
+    .contact-list{display:flex;flex-direction:column;gap:8px}
+
+    footer{text-align:center;margin-top:20px;color:var(--muted);font-size:14px}
+
+    @media(max-width:900px){
+      main{grid-template-columns:1fr}
+      .card-aside{position:static}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="avatar">BF</div>
+        <h1>Bruno Frigo</h1>
+      </div>
+
+      <div class="top-actions">
+        <button class="btn" id="themeBtn">Modo Claro</button>
+        <a class="btn ghost" id="downloadResume" href="#">Baixar CV</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <div style="display:flex;gap:20px;align-items:center">
+          <div class="portrait">BF</div>
+          <div>
+            <h2>Olá — eu sou o Bruno Frigo</h2>
+            <p>Sou estudante do curso Técnico em Desenvolvimento de Sistemas, focado em front-end.</p>
+            <div class="meta">
+              <span class="pill">Front-end</span>
+              <span class="pill">JavaScript</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section" style="margin-top:20px">
+          <h3>Sobre mim</h3>
+          <p style="color:var(--muted);margin-top:6px">Gosto de criar interfaces modernas e funcionais, com foco em experiência do usuário.</p>
+        </div>
+
+        <div class="section" style="margin-top:20px">
+          <h3>Habilidades</h3>
+          <div class="skills" id="skillsList"></div>
+        </div>
+
+        <div class="section" style="margin-top:20px">
+          <h3>Projetos Recentes</h3>
+          <div class="projects" id="projectsList"></div>
+        </div>
+      </section>
+
+      <aside class="card card-aside">
+        <h3>Contato</h3>
+        <div class="contact-list">
+          <div><strong>Email:</strong> brunofrigo092@gmail.com</div>
+          <div><strong>Local:</strong> Chapecó — SC</div>
+          <div><strong>GitHub:</strong> github.com/brunofrigo</div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      © 2025 — Desenvolvido por Bruno Frigo. Todos os direitos reservados.
+    </footer>
+  </div>
+
+  <script>
+    const skills = ["HTML","CSS","JavaScript"];
+
+    const projects = [
+      {
+        nome:"Catálogo de Filmes",
+        desc:"App com modo escuro, favoritos e sistema de busca.",
+        link:"https://brunofrigo.github.io/projetode.oiII/"
+      },
+      {
+        nome:"Meu Portfólio",
+        desc:"Site desenvolvido em HTML, CSS e JavaScript.",
+        link:"https://brunofrigo.github.io"
+      }
+    ];
+
+    const skillsList = document.getElementById("skillsList");
+    skills.forEach(skill=>{
+      const el=document.createElement("span");
+      el.className="skill";
+      el.textContent=skill;
+      skillsList.appendChild(el);
+    });
+
+    const projectsList = document.getElementById("projectsList");
+    projects.forEach(p=>{
+      const div=document.createElement("div");
+      div.className="project";
+      div.innerHTML = `
+          <h4>${p.nome}</h4>
+          <p style='color:var(--muted);font-size:13px;margin-top:4px'>${p.desc}</p>
+          <a href="${p.link}" target="_blank">${p.link}</a>
+      `;
+      projectsList.appendChild(div);
+    });
+
+    const themeBtn=document.getElementById("themeBtn");
+    let light=false;
+    themeBtn.onclick=()=>{
+      light=!light;
+      document.body.style.background=light?"#f2f4f8":"linear-gradient(180deg,var(--bg),#071027)";
+      document.body.style.color=light?"#111":"#e6eef6";
+      themeBtn.textContent=light?"Modo Escuro":"Modo Claro";
+    };
+  </script>
+</body>
+</html>
