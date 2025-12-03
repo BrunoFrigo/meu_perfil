@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bruno Frigo — Desenvolvedor Front-end</title>
   <meta name="description" content="Perfil de Bruno Frigo — Desenvolvedor Front-end, estudante de Desenvolvimento de Sistemas." />
   
@@ -286,6 +286,7 @@
       display: block;
       text-decoration: none;
       color: inherit;
+      cursor: pointer;
     }
 
     .project-card:active {
@@ -582,6 +583,37 @@
       color: var(--accent-secondary);
       text-decoration: underline;
     }
+
+    /* IMPLEMENTAÇÕES ADICIONADAS SEM MUDAR O CÓDIGO EXISTENTE */
+    
+    /* Respeitar preferência de movimento reduzido */
+    @media (prefers-reduced-motion: no-preference) {
+      .fade-in {
+        animation: fadeIn 0.3s ease-out forwards;
+      }
+    }
+
+    /* Remover animação se usuário preferir reduzida */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Hover apenas para dispositivos com hover capability */
+    @media (hover: hover) and (pointer: fine) {
+      .project-card:hover {
+        background: rgba(148, 163, 184, 0.1);
+        border-color: var(--accent-primary);
+        transform: translateY(-2px);
+      }
+      
+      .contact-item:hover {
+        background: rgba(148, 163, 184, 0.1);
+      }
+    }
   </style>
 </head>
 <body data-theme="dark">
@@ -661,13 +693,6 @@
               <a href="https://github.com/brunofrigo" target="_blank" rel="noopener noreferrer" class="contact-link">github.com/brunofrigo</a>
             </div>
           </div>
-          <div class="contact-item">
-            <span class="contact-icon">🔗</span>
-            <div class="contact-text">
-              <strong>Portfólio:</strong><br>
-              <a href="https://brunofrigo.github.io/meu_perfil/" target="_blank" rel="noopener noreferrer" class="contact-link">brunofrigo.github.io</a>
-            </div>
-          </div>
         </div>
       </aside>
     </main>
@@ -721,12 +746,15 @@
       });
     }
 
+    // FUNÇÃO loadProjects MODIFICADA
     function loadProjects() {
       projectsList.innerHTML = '';
       portfolioData.projects.forEach(project => {
         const projectElement = document.createElement('div');
         projectElement.className = 'project-card';
         projectElement.setAttribute('role', 'listitem');
+        projectElement.setAttribute('tabindex', '0');
+        projectElement.setAttribute('aria-label', `Abrir projeto ${project.name} em nova janela`);
         
         // Formatar o link para exibição mais curta
         const displayLink = project.linkDisplay || 
@@ -765,8 +793,13 @@
           window.open(project.link, '_blank', 'noopener,noreferrer');
         });
         
-        // Estilo de cursor pointer para o card todo
-        projectElement.style.cursor = 'pointer';
+        // Adicionar evento de tecla (Enter/Space) - NOVO
+        projectElement.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            window.open(project.link, '_blank', 'noopener,noreferrer');
+          }
+        });
         
         projectsList.appendChild(projectElement);
       });
@@ -819,12 +852,14 @@
       });
     }
 
-    // Copiar link ao clicar longo (opcional para mobile)
+    // MODIFICADO: Event listener de contextmenu sem preventDefault
     document.addEventListener('contextmenu', function(e) {
       if (e.target.classList.contains('project-link-text')) {
-        e.preventDefault();
+        // NÃO usar preventDefault() - permite menu de contexto padrão
         const link = e.target.closest('a').href;
+        // Apenas copia se o usuário realmente quiser (menu de contexto ainda funciona)
         navigator.clipboard.writeText(link).then(() => {
+          // Feedback visual opcional
           const originalText = e.target.textContent;
           e.target.textContent = 'Copiado! ✓';
           setTimeout(() => {
@@ -836,4 +871,3 @@
   </script>
 </body>
 </html>
-
